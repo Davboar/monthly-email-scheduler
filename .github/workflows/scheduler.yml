@@ -1,0 +1,56 @@
+name: Monthly Email Scheduler
+
+on:
+  schedule:
+    # Run daily at 07:55 UTC so we can hit the 08:00 UTC "window".
+    - cron: "55 7 * * *"
+  workflow_dispatch: {}  # manual run for testing
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install deps (none needed, but kept for extensibility)
+        run: pip install --upgrade pip
+
+      - name: Run scheduler
+        env:
+          # --- Required secrets ---
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+
+          # --- At least one recipient ---
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+          TO_EMAILS: ${{ vars.TO_EMAILS }}
+
+          # --- Optional routing ---
+          CC_EMAILS: ${{ vars.CC_EMAILS }}
+          BCC_EMAILS: ${{ vars.BCC_EMAILS }}
+
+          # --- Message content ---
+          SUBJECT: ${{ vars.SUBJECT }}
+          BODY_TEXT: ${{ vars.BODY_TEXT }}
+          BODY_HTML: ${{ vars.BODY_HTML }}
+
+          # --- Schedule controls ---
+          DAY_OF_MONTH: ${{ vars.DAY_OF_MONTH }}
+          RUN_HOUR_UTC: ${{ vars.RUN_HOUR_UTC }}
+          SEND_ON_LAST_IF_SHORT: ${{ vars.SEND_ON_LAST_IF_SHORT }}
+
+          # --- SMTP & behavior ---
+          SMTP_HOST: ${{ vars.SMTP_HOST }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}
+          SMTP_USE_TLS: ${{ vars.SMTP_USE_TLS }}
+          DRY_RUN: ${{ vars.DRY_RUN }}
+
+          # --- Attachments (comma-separated repo paths) ---
+          ATTACHMENTS: ${{ vars.ATTACHMENTS }}
+        run: python send_email.py
