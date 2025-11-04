@@ -29,10 +29,10 @@ def list_from_env(name):
 def should_send_today(now_utc):
     # Get config
     target_day = int(env("DAY_OF_MONTH", "2"))  # 1..31
-    # run_hour_utc = int(env("RUN_HOUR_UTC", "16")) # 0..23
     send_on_last_if_short = parse_bool(env("SEND_ON_LAST_IF_SHORT", "true"))
 
     # Only proceed at the chosen hour
+    # run_hour_utc = int(env("RUN_HOUR_UTC", "16")) # 0..23
     # run_minute_utc = int(env("RUN_MINUTE_UTC", "0"))  # new var for minutes
     # if now_utc.hour != run_hour_utc or now_utc.minute != run_minute_utc:
     #    print(f"Not the configured time (now={now_utc.hour:02d}:{now_utc.minute:02d}, target={run_hour_utc:02d}:{run_minute_utc:02d}).")
