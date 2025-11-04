@@ -58,7 +58,9 @@ Create these variables (or edit if they already exist):
   ```text
   Hello Dr Smith,
 
-  This is my monthly update.
+  This is my monthly update:
+  - 2 boxes of XANATAN 25mg
+  - 1 bottle of cough sirup
 
   Kind regards,
-  John
+  John Doe
