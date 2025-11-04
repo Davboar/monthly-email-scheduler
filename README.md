@@ -61,4 +61,4 @@ Create these variables (or edit if they already exist):
   This is my monthly update.
 
   Kind regards,
-  David
+  John
