@@ -3,7 +3,9 @@ name: Monthly Email Scheduler
 on:
   schedule:
     # Run daily at 10:55 UTC so we can hit the 11:00 UTC "window".
-    - cron: "55 10 * * *"
+    # - cron: "55 10 * * *"
+    # Run daily at 10:00 UTC so we can hit the 10:00 UTC "window".
+    - cron: "0 10 * * *"
   workflow_dispatch: {}  # manual run for testing
 
 jobs:
